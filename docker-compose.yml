@@ -1,0 +1,7 @@
+version: '3'
+
+services:
+  rails-dev-box:
+    build: .
+    volumes:
+      - ./rails:/rails
