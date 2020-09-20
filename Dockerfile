@@ -19,13 +19,16 @@ RUN gem install bundler -N
 RUN apt-get update && apt-get -y install git rabbitmq-server
 
 USER postgres
-RUN /etc/init.d/postgresql start && createuser --superuser docker
-RUN /etc/init.d/postgresql start && createdb -O docker -E UTF8 -T template0 activerecord_unittest
-RUN /etc/init.d/postgresql start && createdb -O docker -E UTF8 -T template0 activerecord_unittest2
+RUN /etc/init.d/postgresql start && createuser --superuser root
+RUN /etc/init.d/postgresql start && createdb -O root -E UTF8 -T template0 activerecord_unittest
+RUN /etc/init.d/postgresql start && createdb -O root -E UTF8 -T template0 activerecord_unittest2
 USER root
 
 RUN apt-get update && apt-get -y install imagemagick mupdf mupdf-tools ffmpeg poppler-utils
 RUN apt-get update && apt-get -y install libxml2 libxml2-dev libxslt1-dev libncurses5-dev nodejs yarn
+
+RUN mkdir -p /bundle
+ENV BUNDLE_PATH=/bundle
 
 RUN mkdir -p /rails
 WORKDIR /rails
